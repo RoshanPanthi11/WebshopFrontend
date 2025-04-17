@@ -32,7 +32,7 @@ const ProductGrid = () => {
     <div className="w-full px-4 sm:px-6 lg:px-12  bg-gray-50 py-12 rounded-xl shadow-lg">
       {/* Heading Section */}
       <h2 className="text-4xl font-semibold text-center text-gray-800 tracking-tight mb-8 font-poppins">
-        Clothing Collection
+       Our Products
       </h2>
 
       {/* Product Grid */}
