@@ -12,7 +12,7 @@ export default function PartnersSection() {
           {/* Partner 1 */}
           <div className="flex justify-center items-center p-6 bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-2xl hover:scale-105 hover:bg-gray-100 transform">
             <img
-              src="https://via.placeholder.com/150"
+              src="https://via.placeholder.com/150x150?text=Partner+1"
               alt="Partner 1"
               className="w-32 h-32 object-contain transition-all duration-300 hover:opacity-90"
             />
@@ -21,7 +21,7 @@ export default function PartnersSection() {
           {/* Partner 2 */}
           <div className="flex justify-center items-center p-6 bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-2xl hover:scale-105 hover:bg-gray-100 transform">
             <img
-              src="https://via.placeholder.com/150"
+              src="https://via.placeholder.com/150x150?text=Partner+2"
               alt="Partner 2"
               className="w-32 h-32 object-contain transition-all duration-300 hover:opacity-90"
             />
@@ -30,7 +30,7 @@ export default function PartnersSection() {
           {/* Partner 3 */}
           <div className="flex justify-center items-center p-6 bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-2xl hover:scale-105 hover:bg-gray-100 transform">
             <img
-              src="https://via.placeholder.com/150"
+              src="https://via.placeholder.com/150x150?text=Partner+3"
               alt="Partner 3"
               className="w-32 h-32 object-contain transition-all duration-300 hover:opacity-90"
             />
@@ -39,7 +39,7 @@ export default function PartnersSection() {
           {/* Partner 4 */}
           <div className="flex justify-center items-center p-6 bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-2xl hover:scale-105 hover:bg-gray-100 transform">
             <img
-              src="https://via.placeholder.com/150"
+              src="https://via.placeholder.com/150x150?text=Partner+4"
               alt="Partner 4"
               className="w-32 h-32 object-contain transition-all duration-300 hover:opacity-90"
             />
@@ -48,7 +48,7 @@ export default function PartnersSection() {
           {/* Partner 5 */}
           <div className="flex justify-center items-center p-6 bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-2xl hover:scale-105 hover:bg-gray-100 transform">
             <img
-              src="https://via.placeholder.com/150"
+              src="https://via.placeholder.com/150x150?text=Partner+5"
               alt="Partner 5"
               className="w-32 h-32 object-contain transition-all duration-300 hover:opacity-90"
             />
@@ -57,7 +57,7 @@ export default function PartnersSection() {
           {/* Partner 6 */}
           <div className="flex justify-center items-center p-6 bg-white rounded-lg shadow-md transition-all duration-300 hover:shadow-2xl hover:scale-105 hover:bg-gray-100 transform">
             <img
-              src="https://via.placeholder.com/150"
+              src="https://via.placeholder.com/150x150?text=Partner+6"
               alt="Partner 6"
               className="w-32 h-32 object-contain transition-all duration-300 hover:opacity-90"
             />

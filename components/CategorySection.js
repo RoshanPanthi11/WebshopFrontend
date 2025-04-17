@@ -42,7 +42,7 @@ const CategorySection = () => {
             className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-center"
           >
             <Image
-              src={`https://source.unsplash.com/600x400/?${item.image}`}
+              src={`/about.jpeg`}
               alt={item.title}
               width={600}
               height={400}
