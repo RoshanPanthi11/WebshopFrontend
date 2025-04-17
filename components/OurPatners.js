@@ -2,7 +2,7 @@
 
 export default function PartnersSection() {
   return (
-    <section className="bg-gradient-to-r from-blue-50 to-green-50 py-12">
+    <section className="bg-gradient-to-br from-blue-50 to-indigo-100 py-12">
       <div className="max-w-7xl mx-auto px-6 text-center">
         <h2 className="text-4xl font-extrabold text-gray-900 mb-8 font-sans tracking-wide">
           Our Partners
