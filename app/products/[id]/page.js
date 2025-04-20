@@ -3,7 +3,7 @@
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useAppContext } from '@/app/context/AppContext';
-import Image from 'next/image'; // Import next/image for better image handling
+import Image from 'next/image'; 
 
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
@@ -11,8 +11,8 @@ const ProductDetail = () => {
   const [showAllReviews, setShowAllReviews] = useState(false);
   const { addToCart } = useAppContext();
 
-  const params = useParams(); // Access dynamic params from the URL
-  const { id } = params; // Destructure the `id` from the params
+  const params = useParams(); 
+  const { id } = params; 
 
   useEffect(() => {
     if (!id) return; 

@@ -46,7 +46,7 @@ const ProductGrid = () => {
         {visibleCount < products.length && (
           <button
             onClick={handleSeeMore}
-            className="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-full hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-900 shadow-md transition-all transform hover:scale-105"
+            className="px-8 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full hover:bg-gradient-to-r hover:from-orange-600 hover:to-orange-700 shadow-md transition-all transform hover:scale-105"
           >
             See More
           </button>
@@ -54,7 +54,7 @@ const ProductGrid = () => {
         {visibleCount > 8 && (
           <button
             onClick={handleShowLess}
-            className="px-8 py-3 bg-gradient-to-r from-red-500 to-red-700 text-white rounded-full hover:bg-gradient-to-r hover:from-red-600 hover:to-red-800 shadow-md transition-all transform hover:scale-105"
+            className="px-8 py-3 bg-gradient-to-r from-orange-400 to-orange-500 text-white rounded-full hover:bg-gradient-to-r hover:from-orange-500 hover:to-orange-600 shadow-md transition-all transform hover:scale-105"
           >
             Show Less
           </button>

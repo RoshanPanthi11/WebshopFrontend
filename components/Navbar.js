@@ -1,14 +1,21 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Navbar() {
   return (
-    <nav className=" shadow-lg border-b border-gray-200">
+    <nav className="shadow-lg border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="text-2xl font-extrabold text-gray-900 tracking-tight hover:text-[#7c3aed] transition-colors duration-300 font-inter">
-          MyLogo
+        <Link href="/" className="flex items-center space-x-2">
+          <Image
+            src="/logo.png"
+            alt="Logo"
+            width={36}  // Adjust width
+            height={36} // Adjust height
+            className="object-contain"  // Ensure proper scaling and aspect ratio
+          />
         </Link>
 
         {/* Nav Items */}
@@ -37,26 +44,22 @@ export default function Navbar() {
 
             {/* First-level dropdown */}
             <div className="absolute left-0 mt-2 w-56 bg-gradient-to-br from-[#f3f0ff] to-[#e8f5f9] border rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 z-50">
-              
               <div className="relative group/item">
                 <div className="px-5 py-3 text-gray-800 hover:bg-[#7c3aed] hover:text-white cursor-pointer font-medium transition-all duration-300">
                   Parent 1
                 </div>
 
-                
                 <div className="absolute left-full top-0 w-48 bg-gradient-to-br from-[#f3f0ff] to-[#e8f5f9] border rounded-md shadow-lg opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transition-opacity duration-300 z-50">
                   <div className="px-5 py-3 text-gray-700 hover:bg-[#7c3aed] hover:text-white cursor-pointer font-medium transition-all duration-300">Child 1.1</div>
                   <div className="px-5 py-3 text-gray-700 hover:bg-[#7c3aed] hover:text-white cursor-pointer font-medium transition-all duration-300">Child 1.2</div>
                 </div>
               </div>
 
-      
               <div className="relative group/item">
                 <div className="px-5 py-3 text-gray-800 hover:bg-[#7c3aed] hover:text-white cursor-pointer font-medium transition-all duration-300">
                   Parent 2
                 </div>
 
-                
                 <div className="absolute left-full top-0 w-48 bg-gradient-to-br from-[#f3f0ff] to-[#e8f5f9] border rounded-md shadow-lg opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transition-opacity duration-300 z-50">
                   <div className="px-5 py-3 text-gray-700 hover:bg-[#7c3aed] hover:text-white cursor-pointer font-medium transition-all duration-300">Child 2.1</div>
                   <div className="px-5 py-3 text-gray-700 hover:bg-[#7c3aed] hover:text-white cursor-pointer font-medium transition-all duration-300">Child 2.2</div>
