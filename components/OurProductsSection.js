@@ -9,30 +9,29 @@ const ProductGrid = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const res = await fetch('https://fakestoreapi.com/products');
+      // Fetch the products from the local JSON file
+      const res = await fetch('/Product.json');
       const data = await res.json();
-      const clothes = data.filter(
-        item =>
-          item.category === "men's clothing" || item.category === "women's clothing"
-      );
-      setProducts(clothes); // full data, not slicing here
+      setProducts(data); // Set the products from the JSON file
     };
     fetchProducts();
   }, []);
 
   const handleSeeMore = () => {
-    setVisibleCount(prev => prev + 8);
+    // Increase the visible count to show more products
+    setVisibleCount(prev => (prev + 8 <= products.length ? prev + 8 : products.length));
   };
 
   const handleShowLess = () => {
+    // Decrease the visible count to show fewer products
     setVisibleCount(prev => (prev > 8 ? prev - 8 : 8));
   };
 
   return (
-    <div className="w-full px-4 sm:px-6 lg:px-12  bg-gray-50 py-12 rounded-xl shadow-lg">
+    <div className="w-full px-4 sm:px-6 lg:px-12 bg-gray-50 py-12 rounded-xl shadow-lg">
       {/* Heading Section */}
       <h2 className="text-4xl font-semibold text-center text-gray-800 tracking-tight mb-8 font-poppins">
-       Our Products
+        Our Products
       </h2>
 
       {/* Product Grid */}

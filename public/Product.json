@@ -1,0 +1,183 @@
+[
+    {
+      "id": 1,
+      "image": "/images/medical-product1.jpeg",
+      "title": "Stethoscope",
+      "description": "High-quality stethoscope for medical professionals.",
+      "category": "Medical Equipment",
+      "price": 29.99,
+      "rating": { "rate": 4.5, "count": 150 }
+    },
+    {
+      "id": 2,
+      "image": "/images/medical-product2.jpeg",
+      "title": "Blood Pressure Monitor",
+      "description": "Accurate and reliable blood pressure monitor for home use.",
+      "category": "Medical Equipment",
+      "price": 49.99,
+      "rating": { "rate": 4.7, "count": 200 }
+    },
+    {
+      "id": 3,
+      "image": "/images/medical-product3.jpeg",
+      "title": "Thermometer",
+      "description": "Digital thermometer for quick and accurate temperature reading.",
+      "category": "Medical Equipment",
+      "price": 19.99,
+      "rating": { "rate": 4.3, "count": 300 }
+    },
+    {
+      "id": 4,
+      "image": "/images/medical-product4.jpeg",
+      "title": "Medical Gloves",
+      "description": "Box of high-quality disposable medical gloves.",
+      "category": "Medical Equipment",
+      "price": 15.99,
+      "rating": { "rate": 4.8, "count": 100 }
+    },
+    {
+      "id": 5,
+      "image": "/images/medical-product5.jpg",
+      "title": "Oxygen Mask",
+      "description": "Comfortable and adjustable oxygen mask for patients.",
+      "category": "Medical Equipment",
+      "price": 25.00,
+      "rating": { "rate": 4.6, "count": 120 }
+    },
+    {
+      "id": 6,
+      "image": "/images/medical-product6.jpg",
+      "title": "Surgical Scissors",
+      "description": "Precision surgical scissors for medical procedures.",
+      "category": "Medical Equipment",
+      "price": 40.00,
+      "rating": { "rate": 4.4, "count": 80 }
+    },
+    {
+      "id": 7,
+      "image": "/images/medical-product7.jpg",
+      "title": "Defibrillator",
+      "description": "Portable defibrillator for emergency use.",
+      "category": "Medical Equipment",
+      "price": 500.00,
+      "rating": { "rate": 5.0, "count": 50 }
+    },
+    {
+      "id": 8,
+      "image": "/images/medical-product8.jpg",
+      "title": "Pulse Oximeter",
+      "description": "Non-invasive pulse oximeter for monitoring blood oxygen levels.",
+      "category": "Medical Equipment",
+      "price": 39.99,
+      "rating": { "rate": 4.7, "count": 180 }
+    },
+    {
+      "id": 9,
+      "image": "/images/medical-product9.jpg",
+      "title": "Wheelchair",
+      "description": "Ergonomic wheelchair for enhanced mobility and comfort.",
+      "category": "Medical Equipment",
+      "price": 150.00,
+      "rating": { "rate": 4.3, "count": 220 }
+    },
+    {
+      "id": 10,
+      "image": "/images/medical-product10.jpg",
+      "title": "Nebulizer",
+      "description": "Portable nebulizer for respiratory therapy.",
+      "category": "Medical Equipment",
+      "price": 80.00,
+      "rating": { "rate": 4.6, "count": 160 }
+    },
+    {
+      "id": 11,
+      "image": "/images/medical-product11.jpg",
+      "title": "Glucose Meter",
+      "description": "Compact and efficient glucose meter for diabetes management.",
+      "category": "Medical Equipment",
+      "price": 35.99,
+      "rating": { "rate": 4.4, "count": 210 }
+    },
+    {
+      "id": 12,
+      "image": "/images/medical-product12.jpg",
+      "title": "Hospital Bed",
+      "description": "Adjustable hospital bed for patient comfort.",
+      "category": "Medical Equipment",
+      "price": 500.00,
+      "rating": { "rate": 4.8, "count": 90 }
+    },
+    {
+      "id": 13,
+      "image": "/images/medical-product13.jpg",
+      "title": "Surgical Mask",
+      "description": "Pack of disposable surgical masks for protection.",
+      "category": "Medical Equipment",
+      "price": 10.00,
+      "rating": { "rate": 4.5, "count": 300 }
+    },
+    {
+      "id": 14,
+      "image": "/images/medical-product14.jpg",
+      "title": "Medical Face Shield",
+      "description": "Protective face shield for medical staff.",
+      "category": "Medical Equipment",
+      "price": 18.99,
+      "rating": { "rate": 4.3, "count": 140 }
+    },
+    {
+      "id": 15,
+      "image": "/images/medical-product15.jpg",
+      "title": "Therapeutic Heating Pad",
+      "description": "Electric heating pad for pain relief.",
+      "category": "Medical Equipment",
+      "price": 24.99,
+      "rating": { "rate": 4.6, "count": 130 }
+    },
+    {
+      "id": 16,
+      "image": "/images/medical-product16.jpg",
+      "title": "First Aid Kit",
+      "description": "Complete first aid kit for emergencies.",
+      "category": "Medical Equipment",
+      "price": 29.99,
+      "rating": { "rate": 4.5, "count": 170 }
+    },
+    {
+      "id": 17,
+      "image": "/images/medical-product17.jpg",
+      "title": "Stairlift",
+      "description": "Motorized stairlift for easy mobility in multi-level homes.",
+      "category": "Medical Equipment",
+      "price": 1000.00,
+      "rating": { "rate": 5.0, "count": 50 }
+    },
+    {
+      "id": 18,
+      "image": "/images/medical-product18.jpg",
+      "title": "CPR Mask",
+      "description": "CPR mask for safe resuscitation in emergencies.",
+      "category": "Medical Equipment",
+      "price": 15.00,
+      "rating": { "rate": 4.7, "count": 200 }
+    },
+    {
+      "id": 19,
+      "image": "/images/medical-product19.jpg",
+      "title": "Patient Lift",
+      "description": "Patient lift system for safe and easy transfers.",
+      "category": "Medical Equipment",
+      "price": 600.00,
+      "rating": { "rate": 4.8, "count": 60 }
+    },
+    {
+      "id": 20,
+      "image": "/images/medical-product20.jpg",
+      "title": "Blood Glucose Test Strips",
+      "description": "Test strips for accurate blood glucose measurement.",
+      "category": "Medical Equipment",
+      "price": 12.99,
+      "rating": { "rate": 4.3, "count": 180 }
+    }
+  ]
+  

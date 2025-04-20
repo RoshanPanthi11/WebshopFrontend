@@ -4,55 +4,62 @@ import React from 'react';
 import Image from 'next/image';
 import { Search } from 'lucide-react';
 
+const categories = [
+  { title: 'Surgical Instruments', image: '/1.jpeg' },
+  { title: 'Medicines', image: '/2.jpeg' },
+  { title: 'Diagnostics', image: '/3.jpeg' },
+  { title: 'Mobility Aids', image: '/4.jpeg' },
+];
+
 const CategorySection = () => {
   return (
-    <div className="bg-gradient-to-br from-blue-50 to-indigo-100 py-16 px-4">
+    <section className="bg-gradient-to-br from-[#e8f5f9] to-[#f3f0ff] py-20 px-4">
       {/* Heading */}
-      <h2 className="text-4xl font-bold text-center mb-10 text-gray-800 tracking-wide font-poppins">
+      <h2 className="text-center font-extrabold tracking-tight font-sans text-gray-800 text-3xl sm:text-4xl md:text-5xl mb-14">
         Find What You Need
       </h2>
 
-      <div className="max-w-2xl mx-auto mb-14">
-  <form className="flex items-center border border-gray-300 rounded-full shadow-sm overflow-hidden bg-white focus-within:ring-2 focus-within:ring-blue-500 transition">
-    <input
-      type="text"
-      placeholder="Search for medical supplies, equipment, or medicine..."
-      className="w-full px-5 py-3 text-gray-700 placeholder-gray-400 focus:outline-none"
-    />
-    <button
-      type="submit"
-      className="bg-blue-600 p-3 pr-4 rounded-r-full hover:bg-blue-700 transition flex items-center justify-center"
-      aria-label="Search"
-    >
-      <Search size={20} className="text-white" />
-    </button>
-  </form>
-</div>
+      {/* Search Bar */}
+      <div className="max-w-3xl mx-auto mb-16">
+        <form className="flex items-center border border-gray-200 rounded-full shadow-md overflow-hidden bg-white focus-within:ring-2 focus-within:ring-purple-300 transition">
+          <input
+            type="text"
+            placeholder="Search for medical supplies, equipment, or medicine..."
+            className="w-full px-5 py-3 text-gray-700 placeholder-gray-400 focus:outline-none bg-white"
+          />
+          <button
+            type="submit"
+            className="bg-purple-500 p-3 pr-4 rounded-r-full hover:bg-purple-600 transition flex items-center justify-center"
+            aria-label="Search"
+          >
+            <Search size={20} className="text-white" />
+          </button>
+        </form>
+      </div>
 
       {/* Category Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-        {[
-          { title: "Surgical Instruments", image: "surgical" },
-          { title: "Medicines", image: "medicine" },
-          { title: "Diagnostics", image: "diagnostics" },
-          { title: "Mobility Aids", image: "mobility" },
-        ].map((item, idx) => (
+        {categories.map((item, idx) => (
           <div
             key={idx}
-            className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-center"
+            className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 text-center group"
           >
-            <Image
-              src={`/about.jpeg`}
-              alt={item.title}
-              width={600}
-              height={400}
-              className="w-full h-40 object-cover rounded-md mb-4"
-            />
-            <h3 className="text-lg font-semibold text-gray-800">{item.title}</h3>
+            <div className="w-full h-44 sm:h-48 relative mb-5 rounded-xl overflow-hidden">
+              <Image
+                src={item.image}
+                alt={item.title}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-700 group-hover:text-purple-600 transition-colors duration-300 relative inline-block">
+              {item.title}
+              <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-purple-500 transition-all duration-300 group-hover:w-full"></span>
+            </h3>
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 
