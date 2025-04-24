@@ -1,6 +1,6 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useAppContext } from '@/app/context/AppContext';
 import Image from 'next/image'; 
@@ -10,13 +10,13 @@ const ProductDetail = () => {
   const [reviews, setReviews] = useState([]);
   const [showAllReviews, setShowAllReviews] = useState(false);
   const { addToCart } = useAppContext();
+  const router = useRouter(); // For redirection
 
   const params = useParams(); 
   const { id } = params; 
 
   useEffect(() => {
     if (!id) return; 
-    
     const parsedId = typeof id === 'string' ? parseInt(id) : null;
 
     if (parsedId) {
@@ -42,7 +42,7 @@ const ProductDetail = () => {
 
   return (
     <div className="bg-gray-50 pt-16">
-      <div className="max-w-7xl mx-auto p-8 flex gap-12 items-center">
+      <div className="max-w-7xl mx-auto p-8 flex flex-col lg:flex-row gap-12 items-center">
         <div className="flex-1">
           <div className="relative w-full h-[450px] bg-white rounded-xl shadow-lg hover:scale-105 transition-transform duration-500 overflow-hidden">
             <Image
@@ -96,12 +96,15 @@ const ProductDetail = () => {
             </div>
           )}
 
-          <button
-            onClick={() => addToCart(product)}
-            className="bg-gradient-to-r from-green-500 to-teal-400 text-white py-3 rounded-lg mt-8 hover:bg-teal-500 transition duration-300 text-lg"
-          >
-            Add to Cart
-          </button>
+<button
+  onClick={() => {
+    addToCart(product);
+   
+  }}
+  className="bg-gradient-to-r from-green-500 to-teal-400 text-white py-3 px-6 rounded-lg mt-8 text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:from-green-600 hover:to-teal-500"
+>
+  Add to Cart
+</button> 
         </div>
       </div>
 

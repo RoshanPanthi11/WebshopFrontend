@@ -4,10 +4,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { FaUser, FaShoppingCart, FaBars, FaTimes } from 'react-icons/fa';
 import { useState } from 'react';
+import { useAppContext } from '@/app/context/AppContext'; // <- Import context
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const { getCartCount } = useAppContext(); // <- Use context
+  const cartCount = getCartCount();
 
   return (
     <nav className="bg-gradient-to-r from-blue-950 to-indigo-950 shadow-md border-b border-orange-300 z-50 relative">
@@ -89,9 +92,11 @@ export default function Navbar() {
           </Link>
           <Link href="/cart" className="relative">
             <FaShoppingCart className="text-[22px] text-white hover:text-[#ff7e5f] transition duration-300" />
-            <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-[11px] rounded-full w-5 h-5 flex items-center justify-center font-semibold">
-              3
-            </span>
+            {cartCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-[11px] rounded-full w-5 h-5 flex items-center justify-center font-semibold">
+                {cartCount}
+              </span>
+            )}
           </Link>
         </div>
 
@@ -176,7 +181,7 @@ export default function Navbar() {
           </Link>
           <Link href="/cart" className="flex items-center space-x-2 hover:text-[#ff7e5f]">
             <FaShoppingCart />
-            <span>Cart (3)</span>
+            <span>Cart ({cartCount})</span>
           </Link>
         </div>
       )}
