@@ -4,22 +4,30 @@ import { FaStar, FaShoppingCart, FaBolt, FaCheck } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useAppContext } from '../app/context/AppContext'; // adjust if needed
+import { useRouter } from 'next/navigation';
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useAppContext();
   const [added, setAdded] = useState(false);
+  const router = useRouter();
+
+  const cartItem = {
+    id: product.id,
+    title: product.title,
+    image: product.image,
+    price: product.price,
+    quantity: 1,
+  };
 
   const handleAddToCart = () => {
-    const cartItem = {
-      id: product.id,
-      title: product.title,
-      image: product.image,
-      price: product.price,
-      quantity: 1,
-    };
     addToCart(cartItem);
     setAdded(true);
-    setTimeout(() => setAdded(false), 1500); // reset after 1.5s
+    setTimeout(() => setAdded(false), 1500);
+  };
+
+  const handleBuyNow = () => {
+    addToCart(cartItem);
+    router.push('/buy');
   };
 
   return (
@@ -72,7 +80,9 @@ const ProductCard = ({ product }) => {
             {added ? <FaCheck size={14} /> : <FaShoppingCart size={14} />}
             {added ? 'Added!' : 'Add to Cart'}
           </button>
+
           <button
+            onClick={handleBuyNow}
             className="flex items-center justify-center gap-2 flex-1 bg-orange-500 text-white py-2 px-4 rounded-xl hover:bg-orange-600 transition text-sm font-medium"
             aria-label={`Buy ${product.title} Now`}
           >
