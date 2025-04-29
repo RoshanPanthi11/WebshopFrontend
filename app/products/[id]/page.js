@@ -3,20 +3,20 @@
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useAppContext } from '@/app/context/AppContext';
-import Image from 'next/image'; 
+import Image from 'next/image';
 
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [showAllReviews, setShowAllReviews] = useState(false);
   const { addToCart } = useAppContext();
-  const router = useRouter(); // For redirection
+  const router = useRouter();
 
-  const params = useParams(); 
-  const { id } = params; 
+  const params = useParams();
+  const { id } = params;
 
   useEffect(() => {
-    if (!id) return; 
+    if (!id) return;
     const parsedId = typeof id === 'string' ? parseInt(id) : null;
 
     if (parsedId) {
@@ -35,22 +35,28 @@ const ProductDetail = () => {
       ];
       setReviews(fakeReviews);
     }
-  }, [id]); 
+  }, [id]);
 
   if (!id) return <div className="text-center mt-20">Invalid Product ID</div>;
   if (!product) return <div className="text-center mt-20">Loading product...</div>;
 
+  const handleBuyNow = () => {
+    addToCart(product);
+    router.push('/buy');
+  };
+
   return (
     <div className="bg-gray-50 pt-16">
       <div className="max-w-7xl mx-auto p-8 flex flex-col lg:flex-row gap-12 items-center">
-        <div className="flex-1">
-          <div className="relative w-full h-[450px] bg-white rounded-xl shadow-lg hover:scale-105 transition-transform duration-500 overflow-hidden">
+        <div className="flex-1 relative">
+          <div className="relative w-full h-[450px] bg-white rounded-xl shadow-lg hover:scale-105 transition-transform duration-500 overflow-hidden group">
             <Image
               src={product.image}
               alt={product.title}
-              layout="fill" 
-              objectFit="contain" 
-              priority 
+              layout="fill"
+              objectFit="contain"
+              priority
+              className="group-hover:scale-110 transition-transform duration-500 ease-in-out"
             />
           </div>
         </div>
@@ -66,7 +72,7 @@ const ProductDetail = () => {
           <p className="text-2xl font-semibold text-green-600">${product.price}</p>
 
           <div className="mt-6">
-            <h3 className="text-xl text-gray-800">Health Information</h3>
+            <h3 className="text-xl text-gray-800 font-semibold">Health Information</h3>
             <p className="text-sm text-gray-600 mt-2">{product.description}</p>
             {product.certifications && (
               <div className="mt-4">
@@ -82,7 +88,7 @@ const ProductDetail = () => {
 
           {product.sizeOptions && (
             <div className="mt-6">
-              <h3 className="text-xl text-gray-800">Select Variant</h3>
+              <h3 className="text-xl text-gray-800 font-semibold">Select Variant</h3>
               <div className="flex gap-4 mt-3">
                 {product.sizeOptions.map((size) => (
                   <button
@@ -96,15 +102,23 @@ const ProductDetail = () => {
             </div>
           )}
 
-<button
-  onClick={() => {
-    addToCart(product);
-   
-  }}
-  className="bg-gradient-to-r from-green-500 to-teal-400 text-white py-3 px-6 rounded-lg mt-8 text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:from-green-600 hover:to-teal-500"
->
-  Add to Cart
-</button> 
+          <div className="flex gap-4 mt-8">
+            <button
+              onClick={() => {
+                addToCart(product);
+              }}
+              className="bg-gradient-to-r from-green-500 to-teal-400 text-white py-3 px-6 rounded-lg text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:from-green-600 hover:to-teal-500"
+            >
+              Add to Cart
+            </button>
+
+            <button
+              onClick={handleBuyNow}
+              className="bg-gradient-to-r from-orange-500 to-indigo-500 text-white py-3 px-6 rounded-lg text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:from-orange-500 hover:to-indigo-600"
+            >
+              Buy Now
+            </button>
+          </div>
         </div>
       </div>
 
