@@ -1,12 +1,16 @@
 'use client';
 import { useAppContext } from '../context/AppContext';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 
 export default function CheckoutPage() {
   const { cart, clearCart, updateQuantity } = useAppContext();
   const router = useRouter();
+
+  const [fullName, setFullName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
@@ -17,7 +21,12 @@ export default function CheckoutPage() {
   }, [cart, router]);
 
   const handleBuy = () => {
-    alert(' Thank you for your purchase!');
+    if (!fullName || !phone || !address) {
+      alert('Please fill in all shipping details.');
+      return;
+    }
+
+    alert(`Thank you for your purchase, ${fullName}!`);
     clearCart();
     router.push('/thank-you');
   };
@@ -83,10 +92,49 @@ export default function CheckoutPage() {
           </div>
         </div>
 
-        {/* Payment Summary Section */}
+        {/* Shipping Info & Payment Summary */}
         <div className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100 h-fit">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">💳 Payment Summary</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">📦 Shipping & Payment</h2>
 
+          {/* Shipping Form */}
+          <form className="space-y-5 mb-8">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+              <input
+                type="text"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                required
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-500 outline-none"
+                placeholder="e.g. Roshan Panthi"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+              <input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                required
+                pattern="[0-9]{10}"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-500 outline-none"
+                placeholder="e.g. 98XXXXXXXX"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Shipping Address</label>
+              <textarea
+                rows={3}
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                required
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-500 outline-none resize-none"
+                placeholder="Street, City, District"
+              />
+            </div>
+          </form>
+
+          {/* Payment Summary */}
           <div className="space-y-4 text-base text-gray-700">
             <div className="flex justify-between">
               <span>Subtotal</span>
@@ -107,7 +155,7 @@ export default function CheckoutPage() {
             onClick={handleBuy}
             className="mt-8 w-full bg-orange-500 hover:bg-orange-600 text-white py-3 px-6 rounded-xl text-lg font-semibold shadow-md transition"
           >
-             Confirm & Pay Now
+            Confirm & Pay Now
           </button>
         </div>
       </div>

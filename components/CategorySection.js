@@ -1,8 +1,9 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Search } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const categories = [
   { title: 'Surgical Instruments', image: '/1.jpeg' },
@@ -12,6 +13,51 @@ const categories = [
 ];
 
 const CategorySection = () => {
+  const [products, setProducts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    // Load your JSON data (public/Product.json)
+    fetch('/Product.json')
+      .then((res) => res.json())
+      .then((data) => setProducts(data))
+      .catch(console.error);
+  }, []);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchTerm.trim())}`);
+      setSearchTerm('');
+      setSuggestions([]);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+
+    if (!value) {
+      setSuggestions([]);
+      return;
+    }
+
+    const matches = products
+      .filter((item) =>
+        item.title.toLowerCase().includes(value.toLowerCase())
+      )
+      .slice(0, 5);
+    setSuggestions(matches);
+  };
+
+  const handleSuggestionClick = (title) => {
+    router.push(`/search?q=${encodeURIComponent(title)}`);
+    setSearchTerm('');
+    setSuggestions([]);
+  };
+
   return (
     <section className="bg-gradient-to-br from-[#e8f5f9] to-[#f3f0ff] py-20 px-4">
       {/* Heading */}
@@ -20,10 +66,15 @@ const CategorySection = () => {
       </h2>
 
       {/* Search Bar */}
-      <div className="max-w-3xl mx-auto mb-16">
-        <form className="flex items-center border border-gray-200 rounded-full shadow-md overflow-hidden bg-white focus-within:ring-2 focus-within:ring-purple-300 transition">
+      <div className="max-w-3xl mx-auto mb-16 relative">
+        <form
+          onSubmit={handleSearch}
+          className="flex items-center border border-gray-200 rounded-full shadow-md overflow-hidden bg-white focus-within:ring-2 focus-within:ring-purple-300 transition"
+        >
           <input
             type="text"
+            value={searchTerm}
+            onChange={handleInputChange}
             placeholder="Search for medical supplies, equipment, or medicine..."
             className="w-full px-5 py-3 text-gray-700 placeholder-gray-400 focus:outline-none bg-white"
           />
@@ -35,6 +86,24 @@ const CategorySection = () => {
             <Search size={20} className="text-white" />
           </button>
         </form>
+
+        {/* Suggestion Box */}
+        {suggestions.length > 0 && (
+  <ul className="absolute z-20 mt-2 w-full bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden">
+    {suggestions.map((item, index) => (
+      <li
+        key={item.id}
+        onClick={() => handleSuggestionClick(item.title)}
+        className={`flex items-center gap-2 px-5 py-3 cursor-pointer text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-colors duration-200 ${
+          index !== suggestions.length - 1 ? 'border-b border-gray-100' : ''
+        }`}
+      >
+        <Search size={16} className="text-gray-400 group-hover:text-purple-500" />
+        <span className="font-medium">{item.title}</span>
+      </li>
+    ))}
+  </ul>
+)}
       </div>
 
       {/* Category Grid */}
