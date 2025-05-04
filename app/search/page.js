@@ -1,71 +1,79 @@
-'use client';
+'use client'; // Make sure this is at the top
 
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation'; // Correct import for query params in Next.js 13
+import ProductCard from '../../components/ProductCard'; // Import your ProductCard component
 
-const SearchPage = () => {
-  const searchParams = useSearchParams();
-  const query = searchParams.get('q')?.toLowerCase() || '';
-  const [results, setResults] = useState([]);
+const SearchResults = () => {
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Access query params via useSearchParams
+  const searchParams = useSearchParams();
+  const q = searchParams.get('q'); // Access the 'q' query parameter
+
+  // Fetching products from a JSON file (adjust the path if necessary)
   useEffect(() => {
-    setLoading(true);
-    fetch('/Product.json')
-      .then((res) => res.json())
-      .then((data) => {
-        const filtered = data.filter((item) =>
-          item.title.toLowerCase().includes(query)
-        );
-        setResults(filtered);
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/Product.json'); // Replace with your JSON path
+        const data = await response.json();
+        setProducts(data);
         setLoading(false);
-      });
-  }, [query]);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  // Filter products based on the search query
+  useEffect(() => {
+    if (q) {
+      const filtered = products.filter((product) =>
+        product.title.toLowerCase().includes(q.toLowerCase())
+      );
+      setFilteredProducts(filtered);
+    } else {
+      setFilteredProducts(products); // If no query, show all products
+    }
+  }, [q, products]);
+
+  if (loading) {
+    return (
+      <div className="text-center py-20">
+        <p className="text-gray-500">Loading products...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
-      <h1 className="text-center text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-10">
-        Search Results for: <span className="text-purple-600">"{query}"</span>
-      </h1>
+    <section className="w-full px-4 sm:px-6 lg:px-12 bg-gray-50 py-12 rounded-xl shadow-lg">
+      <div className="w-full max-w-full mx-auto"> {/* Ensure full width is used */}
+        <h1 className="text-4xl font-bold text-orange-600 text-center mb-4">
+          Search Results for: "{q}"
+        </h1>
+        <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto text-lg">
+          {filteredProducts.length} result(s) found
+        </p>
 
-      {loading ? (
-        <div className="flex justify-center items-center h-40">
-          <span className="text-gray-500 animate-pulse">Loading...</span>
-        </div>
-      ) : results.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {results.map((item) => (
-            <div
-              key={item.id}
-              className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 group overflow-hidden"
-            >
-              <div className="relative h-52 sm:h-60 w-full">
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <div className="p-4 text-center">
-                <h2 className="text-lg font-semibold text-gray-700 group-hover:text-purple-600 transition-colors">
-                  {item.title}
-                </h2>
-              </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))
+          ) : (
+            <div className="col-span-4 text-center text-gray-500">
+              No products found.
             </div>
-          ))}
+          )}
         </div>
-      ) : (
-        <div className="text-center mt-12">
-          <p className="text-gray-600 text-lg">
-            No results found for <span className="font-medium text-purple-600">"{query}"</span>.
-          </p>
-          <p className="text-gray-500 mt-2 text-sm">Try searching with different keywords.</p>
-        </div>
-      )}
-    </div>
+      </div>
+    </section>
   );
 };
 
-export default SearchPage;
+export default SearchResults;
