@@ -32,15 +32,15 @@ export default function CheckoutPage() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-16">
-      <h1 className="text-4xl font-extrabold text-center text-orange-600 mb-12 drop-shadow-sm">
+    <div className="max-w-6xl mx-auto px-4 py-16 bg-gray-100 min-h-screen">
+      <h1 className="text-4xl font-extrabold text-center text-amber-600 mb-12 drop-shadow-sm">
         🛍️ Checkout & Confirm Your Order
       </h1>
 
       <div className="grid md:grid-cols-3 gap-10">
         {/* Cart Items Section */}
-        <div className="md:col-span-2 bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+        <div className="md:col-span-2 bg-gray-50 rounded-3xl shadow-lg p-8 border border-gray-200">
+          <h2 className="text-2xl font-bold text-gray-700 mb-6 flex items-center gap-2">
             🛒 Your Cart
           </h2>
 
@@ -48,13 +48,13 @@ export default function CheckoutPage() {
             {cart.map((item) => (
               <div
                 key={item.id}
-                className="flex flex-col sm:flex-row justify-between items-center bg-gray-50 p-4 rounded-xl shadow-sm border"
+                className="flex flex-col sm:flex-row justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-gray-200"
               >
                 <div className="flex items-center gap-4 w-full sm:w-auto">
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="w-20 h-20 object-contain rounded-xl border"
+                    className="w-20 h-20 object-contain rounded-xl border border-gray-300"
                   />
                   <div>
                     <h4 className="font-semibold text-gray-800 text-lg">{item.name}</h4>
@@ -63,7 +63,7 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="flex items-center mt-4 sm:mt-0 gap-4">
-                  <div className="flex items-center border rounded-xl overflow-hidden shadow-sm">
+                  <div className="flex items-center border border-gray-300 rounded-xl overflow-hidden shadow-sm">
                     <button
                       onClick={() => updateQuantity(item.id, 'decrease')}
                       className="bg-orange-100 hover:bg-orange-200 text-orange-600 p-2"
@@ -82,7 +82,7 @@ export default function CheckoutPage() {
                   </div>
 
                   <div className="text-right">
-                    <span className="font-semibold text-gray-800">
+                    <span className="font-semibold text-gray-700">
                       ${(item.price * item.quantity).toFixed(2)}
                     </span>
                   </div>
@@ -93,42 +93,42 @@ export default function CheckoutPage() {
         </div>
 
         {/* Shipping Info & Payment Summary */}
-        <div className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100 h-fit">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">📦 Shipping & Payment</h2>
+        <div className="bg-gray-50 rounded-3xl shadow-lg p-8 border border-gray-200 h-fit">
+          <h2 className="text-2xl font-bold text-gray-700 mb-6">📦 Shipping & Payment</h2>
 
           {/* Shipping Form */}
           <form className="space-y-5 mb-8">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+              <label className="block text-sm font-medium text-gray-600 mb-1">Full Name</label>
               <input
                 type="text"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-500 outline-none"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-amber-400 focus:border-amber-500 outline-none bg-white"
                 placeholder="e.g. Roshan Panthi"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+              <label className="block text-sm font-medium text-gray-600 mb-1">Phone Number</label>
               <input
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 required
                 pattern="[0-9]{10}"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-500 outline-none"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-amber-400 focus:border-amber-500 outline-none bg-white"
                 placeholder="e.g. 98XXXXXXXX"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Shipping Address</label>
+              <label className="block text-sm font-medium text-gray-600 mb-1">Shipping Address</label>
               <textarea
                 rows={3}
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-orange-400 focus:border-orange-500 outline-none resize-none"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-amber-400 focus:border-amber-500 outline-none resize-none bg-white"
                 placeholder="Street, City, District"
               />
             </div>
@@ -144,7 +144,7 @@ export default function CheckoutPage() {
               <span>Shipping</span>
               <span className="font-semibold text-green-600">Free</span>
             </div>
-            <hr className="my-2" />
+            <hr className="my-2 border-gray-300" />
             <div className="flex justify-between text-lg font-bold">
               <span>Total</span>
               <span>${total.toFixed(2)}</span>
@@ -153,7 +153,7 @@ export default function CheckoutPage() {
 
           <button
             onClick={handleBuy}
-            className="mt-8 w-full bg-orange-500 hover:bg-orange-600 text-white py-3 px-6 rounded-xl text-lg font-semibold shadow-md transition"
+            className="mt-8 w-full bg-orange-400 hover:bg-orange-500 text-white py-3 px-6 rounded-xl text-lg font-semibold shadow-md transition"
           >
             Confirm & Pay Now
           </button>

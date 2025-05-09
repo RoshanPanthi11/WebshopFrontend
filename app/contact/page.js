@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import {
   FaEnvelope,
   FaPhone,
@@ -11,28 +11,29 @@ import {
 } from 'react-icons/fa';
 
 export default function ContactUs() {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const handleChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = (data) => {
     alert('Thank you for contacting us!');
-    setFormData({ name: '', email: '', message: '' });
+    console.log(data);
+    reset();
   };
 
   return (
     <section className="bg-gray-50 py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold text-orange-600 text-center mb-4"> Get in Touch</h1>
+        <h1 className="text-4xl font-bold text-orange-600 text-center mb-4">Get in Touch</h1>
         <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto text-lg">
           We'd love to hear from you. Whether you have a question or just want to say hi, our team is ready to answer all your inquiries.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 bg-white p-8 rounded-3xl shadow-2xl border border-gray-100">
-          {/* Left Panel */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 bg-white p-8 rounded-3xl shadow-lg border border-gray-100">
+          {/* Contact Info */}
           <div className="space-y-10">
             <div className="space-y-4">
               <h3 className="text-2xl font-semibold text-gray-800">📞 Contact Information</h3>
@@ -67,8 +68,8 @@ export default function ContactUs() {
 
           {/* Contact Form */}
           <form
-            onSubmit={handleSubmit}
-            className="space-y-6 bg-orange-50 p-6 rounded-2xl border border-orange-100 shadow-sm"
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-6 bg-orange-50 p-6 rounded-2xl border border-orange-100 shadow-md"
           >
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
@@ -76,14 +77,14 @@ export default function ContactUs() {
               </label>
               <input
                 type="text"
-                name="name"
                 id="name"
-                required
-                value={formData.name}
-                onChange={handleChange}
-                className="mt-2 w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-sm transition"
+                {...register('name', { required: 'Name is required' })}
+                className={`mt-2 w-full px-4 py-3 border rounded-lg shadow-sm transition focus:outline-none focus:ring-2 ${
+                  errors.name ? 'border-red-500 focus:ring-red-300' : 'border-gray-300 focus:ring-orange-400'
+                }`}
                 placeholder="Your name"
               />
+              {errors.name && <p className="text-sm text-red-600 mt-1">{errors.name.message}</p>}
             </div>
 
             <div>
@@ -92,14 +93,20 @@ export default function ContactUs() {
               </label>
               <input
                 type="email"
-                name="email"
                 id="email"
-                required
-                value={formData.email}
-                onChange={handleChange}
-                className="mt-2 w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-sm transition"
+                {...register('email', {
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^\S+@\S+$/i,
+                    message: 'Invalid email address',
+                  },
+                })}
+                className={`mt-2 w-full px-4 py-3 border rounded-lg shadow-sm transition focus:outline-none focus:ring-2 ${
+                  errors.email ? 'border-red-500 focus:ring-red-300' : 'border-gray-300 focus:ring-orange-400'
+                }`}
                 placeholder="you@example.com"
               />
+              {errors.email && <p className="text-sm text-red-600 mt-1">{errors.email.message}</p>}
             </div>
 
             <div>
@@ -107,20 +114,20 @@ export default function ContactUs() {
                 Message
               </label>
               <textarea
-                name="message"
                 id="message"
                 rows="5"
-                required
-                value={formData.message}
-                onChange={handleChange}
-                className="mt-2 w-full px-4 py-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-sm transition"
+                {...register('message', { required: 'Message is required' })}
+                className={`mt-2 w-full px-4 py-3 border rounded-lg resize-none shadow-sm transition focus:outline-none focus:ring-2 ${
+                  errors.message ? 'border-red-500 focus:ring-red-300' : 'border-gray-300 focus:ring-orange-400'
+                }`}
                 placeholder="Your message..."
               />
+              {errors.message && <p className="text-sm text-red-600 mt-1">{errors.message.message}</p>}
             </div>
 
             <button
               type="submit"
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold text-lg shadow-md transition"
+              className="w-full bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold text-lg shadow transition"
             >
               ✉ Send Message
             </button>
