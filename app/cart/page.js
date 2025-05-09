@@ -5,105 +5,112 @@ import Link from 'next/link';
 
 export default function CartPage() {
   const { cart, updateQuantity, removeFromCart, clearCart } = useAppContext();
-
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12">
-      <h2 className="text-3xl md:text-4xl font-bold text-orange-600 mb-10 text-center md:text-left">
-        🛒 Your Cart
-      </h2>
+    <div className="min-h-screen bg-[#f5f5f5] py-12 px-4">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-3xl md:text-4xl font-bold text-orange-500 mb-10">
+          🛒 Shopping Cart
+        </h2>
 
-      {cart.length === 0 ? (
-        <div className="text-center text-gray-500">
-          <p className="text-lg">Your cart is currently empty.</p>
-          <Link href="/" className="mt-4 inline-block text-orange-500 hover:underline font-medium">
-            ⬅ Continue Shopping
-          </Link>
-        </div>
-      ) : (
-        <>
-          <div className="space-y-6">
-            {cart.map((item) => (
-              <div
-                key={item.id}
-                className="flex flex-col md:flex-row items-center justify-between gap-6 bg-white shadow-md rounded-xl p-4 border border-gray-100"
-              >
-                {/* Product Info */}
-                <div className="flex items-center gap-4 w-full md:w-1/2">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-24 h-24 object-contain rounded-lg border"
-                  />
-                  <div className="flex-1">
-                    <h4 className="text-base md:text-lg font-semibold text-gray-800">
-                      {item.name}
-                    </h4>
-                    <p className="text-sm text-gray-500">Price: ${item.price.toFixed(2)}</p>
+        {cart.length === 0 ? (
+          <div className="text-center text-gray-600">
+            <p className="text-lg mb-4">Your cart is currently empty.</p>
+            <Link href="/" className="text-orange-500 hover:underline font-medium">
+              ⬅ Continue Shopping
+            </Link>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Cart Items Section */}
+            <div className="lg:col-span-2 space-y-6">
+              {cart.map((item) => (
+                <div
+                  key={item.id}
+                  className="flex flex-col sm:flex-row items-center justify-between bg-white p-4 rounded-xl shadow-md border border-gray-200 hover:shadow-lg transition"
+                >
+                  {/* Image + Info */}
+                  <div className="flex items-center gap-4 w-full sm:w-2/3">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-20 h-20 object-contain bg-gray-100 p-2 rounded-lg border"
+                    />
+                    <div className="flex-1">
+                      <h4 className="text-lg font-semibold text-gray-800">{item.name}</h4>
+                      <p className="text-sm text-gray-500 mt-1">
+                        Price: <span className="font-medium">${item.price.toFixed(2)}</span>
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Quantity + Subtotal */}
+                  <div className="flex flex-col items-center sm:items-end gap-3 mt-4 sm:mt-0">
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => updateQuantity(item.id, 'decrease')}
+                        className="w-8 h-8 bg-gray-200 hover:bg-gray-300 rounded-full text-orange-600 font-bold transition"
+                      >
+                        −
+                      </button>
+                      <span className="w-8 text-center text-sm font-medium text-gray-700">
+                        {item.quantity}
+                      </span>
+                      <button
+                        onClick={() => updateQuantity(item.id, 'increase')}
+                        className="w-8 h-8 bg-gray-200 hover:bg-gray-300 rounded-full text-orange-600 font-bold transition"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <p className="text-md font-semibold text-gray-800">
+                      ${(item.price * item.quantity).toFixed(2)}
+                    </p>
+                    <button
+                      onClick={() => removeFromCart(item.id)}
+                      className="text-sm text-red-500 hover:underline"
+                    >
+                      Remove
+                    </button>
                   </div>
                 </div>
-
-                {/* Quantity Control */}
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => updateQuantity(item.id, 'decrease')}
-                    className="w-8 h-8 bg-orange-100 hover:bg-orange-200 text-orange-600 rounded-full text-lg font-bold transition"
-                  >
-                    −
-                  </button>
-                  <span className="min-w-[24px] text-center font-medium text-gray-700">
-                    {item.quantity}
-                  </span>
-                  <button
-                    onClick={() => updateQuantity(item.id, 'increase')}
-                    className="w-8 h-8 bg-orange-100 hover:bg-orange-200 text-orange-600 rounded-full text-lg font-bold transition"
-                  >
-                    +
-                  </button>
-                </div>
-
-                {/* Subtotal */}
-                <p className="text-lg font-semibold text-gray-800">
-                  ${(item.price * item.quantity).toFixed(2)}
-                </p>
-
-                {/* Remove Button */}
-                <button
-                  onClick={() => removeFromCart(item.id)}
-                  className="text-sm text-red-500 hover:text-red-600 font-medium"
-                >
-                  Remove
-                </button>
-              </div>
-            ))}
-          </div>
-
-          {/* Summary Section */}
-          <div className="mt-12 bg-white border border-gray-100 p-6 rounded-xl shadow-lg">
-            <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-              <h3 className="text-xl font-bold text-gray-800">Total:</h3>
-              <span className="text-2xl font-bold text-orange-600">${total.toFixed(2)}</span>
+              ))}
             </div>
 
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            {/* Checkout Summary */}
+            <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+              <h3 className="text-xl font-bold text-gray-800 mb-6">Order Summary</h3>
+              <div className="flex justify-between text-gray-600 mb-4">
+                <span>Subtotal</span>
+                <span>${total.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between text-gray-600 mb-6">
+                <span>Shipping</span>
+                <span className="text-green-600 font-medium">Free</span>
+              </div>
+              <div className="flex justify-between text-lg font-bold text-gray-800 mb-6 border-t pt-4">
+                <span>Total</span>
+                <span>${total.toFixed(2)}</span>
+              </div>
+
               <button
                 onClick={clearCart}
-                className="w-full md:w-auto bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg font-semibold transition"
+                className="w-full bg-red-100 hover:bg-red-200 text-red-600 py-2 rounded-md font-medium transition mb-4"
               >
                 🗑 Clear Cart
               </button>
 
               <Link
                 href="/buy"
-                className="w-full md:w-auto bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-semibold text-center transition"
+                className="block w-full text-center bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-md font-semibold text-lg transition"
               >
-                🛍 Buy Now
+                🛍 Proceed to Buy
               </Link>
             </div>
           </div>
-        </>
-      )}
+        )}
+      </div>
     </div>
   );
 }
