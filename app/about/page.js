@@ -91,15 +91,17 @@ export default function AboutPage() {
 }
 
 // Feature Component for "Why Choose Us"
-function Feature({ icon, title, desc }) {
-  return (
-    <div className="text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
-      <div className="text-cyan-600 text-4xl mx-auto mb-4">{icon}</div>
-      <h3 className="text-xl font-semibold mb-2 text-gray-800">{title}</h3>
-      <p className="text-gray-600 text-sm">{desc}</p>
-    </div>
-  );
-}
+ function Feature({ icon, title, desc }) {
+    return (
+      <div className="text-center p-6 bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300">
+        <div className="flex justify-center items-center text-cyan-600 text-4xl mb-4">
+          {icon}
+        </div>
+        <h3 className="text-xl font-semibold mb-2 text-gray-800">{title}</h3>
+        <p className="text-gray-600 text-sm">{desc}</p>
+      </div>
+    );
+  }
 
 // Testimonial Card Component
 function TestimonialCard({ name, title, quote, image }) {
