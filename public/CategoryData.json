@@ -1,0 +1,22 @@
+[
+  {
+    "slug": "surgical-instruments",
+    "name": "Surgical Instruments",
+    "subcategories": ["Scalpels", "Forceps", "Scissors"]
+  },
+  {
+    "slug": "medicines",
+    "name": "Medicines",
+    "subcategories": ["Tablets", "Syrups", "Injections"]
+  },
+  {
+    "slug": "diagnostics",
+    "name": "Diagnostics",
+    "subcategories": ["Thermometers", "Blood Pressure Monitors", "ECG Machines"]
+  },
+  {
+    "slug": "mobility-aids",
+    "name": "Mobility Aids",
+    "subcategories": ["Wheelchairs", "Crutches", "Walkers"]
+  }
+]

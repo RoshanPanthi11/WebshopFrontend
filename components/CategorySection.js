@@ -108,25 +108,27 @@ const CategorySection = () => {
 
       {/* Category Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-        {categories.map((item, idx) => (
-          <div
-            key={idx}
-            className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 text-center group"
-          >
-            <div className="w-full h-44 sm:h-48 relative mb-5 rounded-xl overflow-hidden">
-              <Image
-                src={item.image}
-                alt={item.title}
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-            </div>
-            <h3 className="text-lg font-semibold text-gray-700 group-hover:text-purple-600 transition-colors duration-300 relative inline-block">
-              {item.title}
-              <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-purple-500 transition-all duration-300 group-hover:w-full"></span>
-            </h3>
-          </div>
-        ))}
+       {categories.map((item, idx) => (
+  <div
+    key={idx}
+    onClick={() => router.push(`/category/${encodeURIComponent(item.title)}`)}
+    className="cursor-pointer bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 text-center group"
+  >
+    <div className="w-full h-44 sm:h-48 relative mb-5 rounded-xl overflow-hidden">
+      <Image
+        src={item.image}
+        alt={item.title}
+        fill
+        className="object-cover group-hover:scale-105 transition-transform duration-500"
+      />
+    </div>
+    <h3 className="text-lg font-semibold text-gray-700 group-hover:text-purple-600 transition-colors duration-300 relative inline-block">
+      {item.title}
+      <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-purple-500 transition-all duration-300 group-hover:w-full"></span>
+    </h3>
+  </div>
+))}
+
       </div>
     </section>
   );

@@ -56,7 +56,7 @@ const SearchResults = () => {
   }
 
   return (
-    <section className="w-full px-4 sm:px-8 lg:px-16 bg-white py-12 min-h-screen">
+    <section className="w-full px-4 sm:px-8 lg:px-16 bg-gray-50 py-12 min-h-screen">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl sm:text-4xl font-extrabold text-center text-orange-600 mb-2">
           Results for: <span className="italic text-gray-700">"{q}"</span>
@@ -65,7 +65,6 @@ const SearchResults = () => {
           {filteredProducts.length} {filteredProducts.length === 1 ? 'item' : 'items'} found
         </p>
 
-        {/* Sort Dropdown */}
         <div className="flex justify-end mb-6">
           <select
             value={sortOption}
@@ -78,7 +77,6 @@ const SearchResults = () => {
           </select>
         </div>
 
-        {/* Product Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {filteredProducts.length > 0 ? (
             filteredProducts.map((product) => (
