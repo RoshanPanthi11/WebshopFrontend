@@ -4,13 +4,13 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 
-export default function CheckoutPage() {
+export default function CheckoutPage(): JSX.Element {
   const { cart, clearCart, updateQuantity } = useAppContext();
   const router = useRouter();
 
-  const [fullName, setFullName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
+  const [fullName, setFullName] = useState<string>('');
+  const [phone, setPhone] = useState<number | undefined>(undefined);
+  const [address, setAddress] = useState<string>('');
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
@@ -21,7 +21,7 @@ export default function CheckoutPage() {
   }, [cart, router]);
 
   const handleBuy = () => {
-    if (!fullName || !phone || !address) {
+    if (!fullName || phone === undefined || !address) {
       alert('Please fill in all shipping details.');
       return;
     }
@@ -97,10 +97,13 @@ export default function CheckoutPage() {
           <h2 className="text-2xl font-bold text-gray-700 mb-6">📦 Shipping & Payment</h2>
 
           {/* Shipping Form */}
-          <form className="space-y-5 mb-8">
+          <form className="space-y-5 mb-8" onSubmit={(e) => e.preventDefault()}>
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">Full Name</label>
+              <label className="block text-sm font-medium text-gray-600 mb-1" htmlFor="fullName">
+                Full Name
+              </label>
               <input
+                id="fullName"
                 type="text"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
@@ -110,11 +113,19 @@ export default function CheckoutPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">Phone Number</label>
+              <label className="block text-sm font-medium text-gray-600 mb-1" htmlFor="phone">
+                Phone Number
+              </label>
               <input
+                id="phone"
                 type="tel"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                value={phone !== undefined ? phone : ''}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (/^\d*$/.test(val)) {
+                    setPhone(val === '' ? undefined : Number(val));
+                  }
+                }}
                 required
                 pattern="[0-9]{10}"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-amber-400 focus:border-amber-500 outline-none bg-white"
@@ -122,8 +133,11 @@ export default function CheckoutPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">Shipping Address</label>
+              <label className="block text-sm font-medium text-gray-600 mb-1" htmlFor="address">
+                Shipping Address
+              </label>
               <textarea
+                id="address"
                 rows={3}
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}

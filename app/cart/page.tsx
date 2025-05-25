@@ -1,10 +1,11 @@
-'use client';
+"use client";
 
-import { useAppContext } from '../context/AppContext';
-import Link from 'next/link';
+import { useAppContext } from "../context/AppContext"; // make sure path is correct
+import Link from "next/link";
 
-export default function CartPage() {
+export default function CartPage(): JSX.Element {
   const { cart, updateQuantity, removeFromCart, clearCart } = useAppContext();
+
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (

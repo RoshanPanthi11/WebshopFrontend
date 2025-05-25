@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { FaUser, FaShoppingCart, FaBars, FaTimes } from 'react-icons/fa';
 import { useState } from 'react';
-import { useAppContext } from '@/app/context/AppContext'; // <- Import context
+import { useAppContext } from '../app/context/AppContext'; 
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
