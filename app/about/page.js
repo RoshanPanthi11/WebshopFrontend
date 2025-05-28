@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { FaTruck, FaShieldAlt, FaStethoscope, FaHeart } from 'react-icons/fa';
-import AboutUsSection from '../../components/Aboutus'; // Import your shared component
+import AboutUsSection from '../../components/Aboutus'; 
 
 export default function AboutPage() {
   return (

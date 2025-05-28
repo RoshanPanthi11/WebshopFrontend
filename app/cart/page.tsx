@@ -75,7 +75,7 @@ export default function CartPage(): JSX.Element {
                       Remove
                     </button>
                   </div>
-                </div>
+                </div>  
               ))}
             </div>
 

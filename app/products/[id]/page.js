@@ -2,38 +2,43 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useAppContext } from '@/app/context/AppContext';
+import { useAppContext } from '../../../app/context/AppContext'; // use relative path
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
-const ProductDetail = () => {
-  const [product, setProduct] = useState(null);
-  const [reviews, setReviews] = useState([]);
-  const [showAllReviews, setShowAllReviews] = useState(false);
+// Dynamically import PDFViewer only on client
+const PDFViewer = dynamic(() => import('../../../components/Pdfreader'), { ssr: false });
+
+export default function ProductDetail() {
   const { addToCart } = useAppContext();
   const router = useRouter();
-
   const params = useParams();
   const { id } = params;
 
+  const [product, setProduct] = useState(null);
+  const [reviews, setReviews] = useState([]);
+  const [showAllReviews, setShowAllReviews] = useState(false);
+
   useEffect(() => {
     if (!id) return;
+
     const parsedId = typeof id === 'string' ? parseInt(id) : null;
 
     if (parsedId) {
       fetch('/Product.json')
-        .then((res) => res.json())
-        .then((data) => {
-          const found = data.find((item) => item.id === parsedId);
+        .then(res => res.json())
+        .then(data => {
+          const found = data.find(item => item.id === parsedId);
           setProduct(found);
         })
-        .catch((err) => console.error('Fetch error:', err));
+        .catch(err => console.error('Error fetching product:', err));
 
-      const fakeReviews = [
+      // Sample reviews (static)
+      setReviews([
         { rating: 5, comment: 'Excellent product!' },
-        { rating: 4, comment: 'Pretty good overall.' },
-        { rating: 3, comment: 'It was okay.' },
-      ];
-      setReviews(fakeReviews);
+        { rating: 4, comment: 'Very good and helpful.' },
+        { rating: 3, comment: 'Satisfactory.' }
+      ]);
     }
   }, [id]);
 
@@ -46,54 +51,52 @@ const ProductDetail = () => {
   };
 
   return (
-    <div className="bg-gray-50 pt-16">
-      <div className="max-w-7xl mx-auto p-8 flex flex-col lg:flex-row gap-12 items-center">
-        <div className="flex-1 relative">
-          <div className="relative w-full h-[450px] bg-white rounded-xl shadow-lg hover:scale-105 transition-transform duration-500 overflow-hidden group">
+    <div className="bg-gray-50 pt-16 min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 flex flex-col lg:flex-row gap-10">
+        {/* Image Section */}
+        <div className="flex-1">
+          <div className="relative w-full h-[400px] bg-white rounded-lg shadow-md overflow-hidden">
             <Image
               src={product.image}
               alt={product.title}
-              layout="fill"
-              objectFit="contain"
+              fill
+              className="object-contain"
               priority
-              className="group-hover:scale-110 transition-transform duration-500 ease-in-out"
             />
           </div>
         </div>
 
+        {/* Info Section */}
         <div className="flex-1 flex flex-col gap-6">
-          <h1 className="text-4xl font-bold text-gray-900">{product.title}</h1>
-          <div className="flex items-center gap-3 text-xl">
-            <span className="text-yellow-500">
-              {'⭐'.repeat(Math.round(product.rating?.rate || 0))}
-            </span>
-            <span className="text-gray-600 text-sm">({product.rating?.count || 0} reviews)</span>
+          <h1 className="text-3xl font-bold text-gray-800">{product.title}</h1>
+          <div className="flex items-center gap-3 text-lg">
+            <span className="text-yellow-500">{'⭐'.repeat(Math.round(product.rating?.rate || 0))}</span>
+            <span className="text-gray-500 text-sm">({product.rating?.count} reviews)</span>
           </div>
           <p className="text-2xl font-semibold text-green-600">${product.price}</p>
+          <p className="text-gray-700">{product.description}</p>
 
-          <div className="mt-6">
-            <h3 className="text-xl text-gray-800 font-semibold">Health Information</h3>
-            <p className="text-sm text-gray-600 mt-2">{product.description}</p>
-            {product.certifications && (
-              <div className="mt-4">
-                <h4 className="text-lg font-semibold text-gray-800">Certifications</h4>
-                <ul className="list-disc pl-5 text-gray-600">
-                  {product.certifications.map((cert, index) => (
-                    <li key={index}>{cert}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
+          {/* Certifications */}
+          {product.certifications && (
+            <div>
+              <h3 className="font-semibold text-gray-700">Certifications</h3>
+              <ul className="list-disc list-inside text-gray-600">
+                {product.certifications.map((cert, index) => (
+                  <li key={index}>{cert}</li>
+                ))}
+              </ul>
+            </div>
+          )}
 
+          {/* Size Options */}
           {product.sizeOptions && (
-            <div className="mt-6">
-              <h3 className="text-xl text-gray-800 font-semibold">Select Variant</h3>
-              <div className="flex gap-4 mt-3">
-                {product.sizeOptions.map((size) => (
+            <div>
+              <h3 className="font-semibold text-gray-700">Available Sizes</h3>
+              <div className="flex gap-3 mt-2">
+                {product.sizeOptions.map((size, i) => (
                   <button
-                    key={size}
-                    className="bg-gray-200 p-3 rounded-md hover:bg-green-600 hover:text-white transition duration-300 transform hover:scale-105"
+                    key={i}
+                    className="px-3 py-2 border border-gray-300 rounded-md hover:bg-green-500 hover:text-white transition"
                   >
                     {size}
                   </button>
@@ -102,19 +105,17 @@ const ProductDetail = () => {
             </div>
           )}
 
-          <div className="flex gap-4 mt-8">
+          {/* Buttons */}
+          <div className="flex gap-4 mt-6">
             <button
-              onClick={() => {
-                addToCart(product);
-              }}
-              className="bg-gradient-to-r from-green-500 to-teal-400 text-white py-3 px-6 rounded-lg text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:from-green-600 hover:to-teal-500"
+              onClick={() => addToCart(product)}
+              className="bg-green-600 hover:bg-green-700 text-white py-2 px-5 rounded-md"
             >
               Add to Cart
             </button>
-
             <button
               onClick={handleBuyNow}
-              className="bg-gradient-to-r from-orange-500 to-indigo-500 text-white py-3 px-6 rounded-lg text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg hover:from-orange-500 hover:to-indigo-600"
+              className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-5 rounded-md"
             >
               Buy Now
             </button>
@@ -122,54 +123,32 @@ const ProductDetail = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto p-8">
-        <div className="bg-white p-8 rounded-lg shadow-xl">
-          <h2 className="text-3xl font-semibold text-gray-800 mb-6">Customer Reviews</h2>
-
-          <div className="max-h-96 overflow-y-auto mb-4">
-            {(showAllReviews ? reviews : reviews.slice(0, 3)).map((review, index) => (
-              <div
-                key={index}
-                className="border-b-2 border-gray-200 pb-6 mb-6 hover:bg-gray-50 transition duration-300"
-              >
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-gray-300 overflow-hidden">
-                    <img
-                      src="https://via.placeholder.com/150"
-                      alt="Reviewer"
-                      className="object-cover w-full h-full"
-                    />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-semibold text-gray-800">John Doe</h4>
-                    <p className="text-sm text-gray-500">2 days ago</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-yellow-500 text-lg">
-                    {'⭐'.repeat(review.rating)}
-                  </span>
-                  <span className="text-gray-500 text-sm">({review.rating} stars)</span>
-                </div>
-
-                <p className="text-gray-700 text-base">{review.comment}</p>
-              </div>
-            ))}
-          </div>
-
-          {reviews.length > 3 && (
-            <button
-              onClick={() => setShowAllReviews(!showAllReviews)}
-              className="text-green-600 font-semibold mt-4 hover:text-green-800 transition duration-300"
-            >
-              {showAllReviews ? 'Show Less Reviews' : 'Show More Reviews'}
-            </button>
-          )}
+      {/* PDF Viewer */}
+      <div className="max-w-5xl mx-auto mt-12 px-4">
+        <h2 className="text-2xl font-bold mb-4 text-gray-800">Medicine Information (PDF)</h2>
+        <div className="h-[600px] w-full border border-gray-300 rounded-lg overflow-hidden shadow-sm">
+          <PDFViewer fileUrl="/pdf/dummy.pdf" />
         </div>
+      </div>
+
+      {/* Reviews */}
+      <div className="max-w-5xl mx-auto mt-12 px-4 pb-10">
+        <h2 className="text-2xl font-bold mb-4 text-gray-800">Customer Reviews</h2>
+        {(showAllReviews ? reviews : reviews.slice(0, 3)).map((review, i) => (
+          <div key={i} className="border-b py-4">
+            <div className="text-yellow-500">{'⭐'.repeat(review.rating)}</div>
+            <p className="text-gray-600">{review.comment}</p>
+          </div>
+        ))}
+        {reviews.length > 3 && (
+          <button
+            onClick={() => setShowAllReviews(!showAllReviews)}
+            className="mt-4 text-green-600 hover:underline"
+          >
+            {showAllReviews ? 'Show Less' : 'Show All Reviews'}
+          </button>
+        )}
       </div>
     </div>
   );
-};
-
-export default ProductDetail;
+}
